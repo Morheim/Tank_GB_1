@@ -96,9 +96,7 @@ void ABaseFactory::OnDestroy()
 {
 	auto Temp = GetActorLocation();
 	DeadEffect->ActivateSystem();
-	AudioDeadEffect->Play();
-	GetWorld()->SpawnActor<ADestroyBaseFactory_>(DestroyBaseFactoryMeshClass,DestroyBaseFactoryMeshSpawnPoint->GetComponentLocation(),DestroyBaseFactoryMeshSpawnPoint->GetComponentRotation());
-	GetWorld()->SpawnActor<ADestroyBaseFactory>(DestroyBaseFactoryClass,DestroyBaseFactorySpawnPoint->GetComponentLocation(),DestroyBaseFactorySpawnPoint->GetComponentRotation());
+	AudioDeadEffect->Play();GetWorld()->SpawnActor<ADestroyBaseFactory>(DestroyBaseFactoryClass,DestroyBaseFactorySpawnPoint->GetComponentLocation(),DestroyBaseFactorySpawnPoint->GetComponentRotation());
 	SetActorLocation({-3000, -3000, -3000});
 	DeadEffect->SetWorldLocation(Temp);
 	AudioDeadEffect->SetWorldLocation(Temp);

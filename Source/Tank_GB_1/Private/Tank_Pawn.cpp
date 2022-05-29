@@ -15,6 +15,7 @@
 #include "Turret.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "Particles/ParticleSystemComponent.h"
 
 
 // Sets default values
@@ -25,13 +26,15 @@ ATank_Pawn::ATank_Pawn()
 
 	ArmComponent=CreateDefaultSubobject<USpringArmComponent>("ArmComponent");
 	ArmComponent->SetupAttachment(RootComponent);
-	//ArmComponent->bInheritYaw=false;
-	//ArmComponent->bInheritPitch=false;
-	//ArmComponent->bInheritRoll=false;
+
 
 	CameraComponent=CreateDefaultSubobject<UCameraComponent>("CameraComponent");
 	CameraComponent->SetupAttachment(ArmComponent);
 	CameraComponent->bUsePawnControlRotation=false;
+
+	
+	DeadEffect = CreateDefaultSubobject<UParticleSystemComponent>("DeadEffect");
+	DeadEffect->SetupAttachment(RootComponent);
 	
 
 	//HealthComponent = CreateDefaultSubobject<UHealthComponent>("HealthComponent");
@@ -76,13 +79,8 @@ void ATank_Pawn::SetupCannon(const TSubclassOf<ACannon>& CannonClass)
 		auto Transform = CannonPosition->GetComponentTransform();
 		Cannon = GetWorld()->SpawnActor<ACannon>(CannonType, Transform);
 		Cannon->AttachToComponent(CannonPosition, FAttachmentTransformRules::SnapToTargetIncludingScale);
-		//auto Transform = CannonPosition->GetComponentTransform();
-		//GetWorld()->SpawnActor(CannonType, &Transform);
 	}
 }
-
-//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
 
 void ATank_Pawn::SprayShoot()
 {
@@ -103,8 +101,6 @@ void ATank_Pawn::SetupCannonSpray(const TSubclassOf<ASprayCannon>& CannonClass)
 		auto Transform = CannonPosition->GetComponentTransform();
 		SprayCannon = GetWorld()->SpawnActor<ASprayCannon>(SprayCannonType, Transform);
 		SprayCannon->AttachToComponent(SprayCannonPosition, FAttachmentTransformRules::SnapToTargetIncludingScale);
-		//auto Transform = CannonPosition->GetComponentTransform();
-		//GetWorld()->SpawnActor(CannonType, &Transform);
 	}
 }
 
@@ -133,8 +129,6 @@ void ATank_Pawn::TurretSetupCannon(const TSubclassOf<ATurretCannon>& CannonClass
 		TurretCannon->AttachToComponent(CannonPosition,FAttachmentTransformRules::SnapToTargetIncludingScale);
 	}
 }
-
-
 
 void ATank_Pawn::Swap()
 {
@@ -168,29 +162,29 @@ void ATank_Pawn::BeginPlay()
 {
 	Super::BeginPlay();
 
+
 	TankController = Cast<ATank_PlayerController>(GetController());
-
-	//SetupCannon(CannonType); мы его создали выше и можем вызвать сюда, для сокращения кода.
-	if (CannonType)
-	{
-		auto Transform = CannonPosition->GetComponentTransform();
-		Cannon = GetWorld()->SpawnActor<ACannon>(CannonType, Transform);
-		Cannon->AttachToComponent(CannonPosition, FAttachmentTransformRules::SnapToTargetIncludingScale);
-		//auto Transform = CannonPosition->GetComponentTransform();
-		//GetWorld()->SpawnActor(CannonType, &Transform);
-	}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
-	TankController = Cast<ATank_PlayerController>(GetController());
-
+	//SetupCannon(CannonType);
+	//SetupCannonSpray(SprayCannonType);
+	
+	/*if(IsValid(GameOverWidgetClass))
+		{
+			GameOverWidget = CreateWidget(GetWorld(), GameOverWidgetClass);
+		}*/
+		
+	if (CannonType)
+    	{
+    		auto Transform = CannonPosition->GetComponentTransform();
+    		Cannon = GetWorld()->SpawnActor<ACannon>(CannonType, Transform);
+    		Cannon->AttachToComponent(CannonPosition, FAttachmentTransformRules::SnapToTargetIncludingScale);
+    	}
 	if (SprayCannonType)
-	{
-		auto Transform = SprayCannonPosition->GetComponentTransform();
-		SprayCannon = GetWorld()->SpawnActor<ASprayCannon>(SprayCannonType, Transform);
-		SprayCannon->AttachToComponent(SprayCannonPosition, FAttachmentTransformRules::SnapToTargetIncludingScale);
-	}
-
+    	{
+    		auto Transform = SprayCannonPosition->GetComponentTransform();
+    		SprayCannon = GetWorld()->SpawnActor<ASprayCannon>(SprayCannonType, Transform);
+    		SprayCannon->AttachToComponent(SprayCannonPosition, FAttachmentTransformRules::SnapToTargetIncludingScale);
+		}
 }
 
 void ATank_Pawn::Destroyed()
@@ -220,15 +214,6 @@ void ATank_Pawn::Tick(float DeltaTime)
 	RotateTank(DeltaTime);
 	RotateCannon(DeltaTime);
 
-	/*доп.код для аналога движения влево\направо.
-	CurrentRightAxisValue = FMath::Lerp(CurrentRightAxisValue, TargetRightAxisValue, InterpolationKey);
-	float yawRotation = RotationSpeed * CurrentRightAxisValue * DeltaTime;
-	FRotator currentRotation = GetActorRotation();
-	yawRotation = currentRotation.Yaw + yawRotation;
-	FRotator newRotation = FRotator(0, yawRotation, 0);
-	SetActorRotation(newRotation);
-	*/
-
 }
 
 // Called to bind functionality to input
@@ -238,19 +223,21 @@ void ATank_Pawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 
 }
 
+void ATank_Pawn::PossessedBy(AController* NewController)
+{
+	Super::PossessedBy(NewController);
+
+	TankController = Cast<ATank_PlayerController>(GetController());
+}
+
 void ATank_Pawn::MoveTank(float DeltaTime)
 {
 	MoveScaleCurrent = FMath::Lerp(MoveScaleCurrent, MoveScaleTarget, MovementAcceleration);
 	const auto Location = GetActorLocation();
 	SetActorLocation(Location + GetActorForwardVector() * MoveScaleCurrent * MovementSpeed * DeltaTime, false);
-
-	/*почему-то у преподавателя работает с тру.
-	SetActorLocation(Location + GetActorForwardVector() * MoveScaleCurrent * MovementSpeed * DeltaTime, true);
-	*/
 	
 	//отображает на экране скорость танка в виде строчки когда
 	GEngine->AddOnScreenDebugMessage(-1, -1, FColor::Cyan, FString::Printf(TEXT("%f"), MoveScaleCurrent));
-	
 	
 }
 
@@ -274,7 +261,6 @@ void ATank_Pawn::RotateCannon(float DeltaTime)
 	OldRotation.Pitch = BodyMeshRotation.Pitch;
 	OldRotation.Roll = BodyMeshRotation.Roll;
 	TurretMesh->SetWorldRotation(FMath::Lerp(TurretMesh->GetComponentRotation(), OldRotation, TurretRotationAcceleration));
-	//56:13
 }
 
 void ATank_Pawn::OnHealthChanged(float CurrentHealth)
@@ -282,8 +268,26 @@ void ATank_Pawn::OnHealthChanged(float CurrentHealth)
 	GEngine->AddOnScreenDebugMessage(237679870, 10, FColor::Red, FString::Printf(TEXT("Health: %f"), CurrentHealth));
 }
 
-
 void ATank_Pawn::OnDestroy()
 {
-	UKismetSystemLibrary::QuitGame(GetWorld(), GetWorld()->GetFirstPlayerController(), EQuitPreference::Quit, true);
+
+	DeadEffect->ActivateSystem();
+
+	if(IsValid(GameOverWidgetClass))
+	{
+		GameOverWidget = CreateWidget(GetWorld(), GameOverWidgetClass);
+		GameOverWidget->AddToViewport();
+	}
+	
+	GetWorld()->GetTimerManager().SetTimer(QuitGame, this,&ATank_Pawn::QuitGameStopSimulation, QuitGameSec, true);
+	
+	Destroy();
 }
+
+
+void ATank_Pawn::QuitGameStopSimulation()
+{
+	UKismetSystemLibrary::QuitGame(GetWorld(),GetWorld()->GetFirstPlayerController(),EQuitPreference::Quit,true);
+}
+
+

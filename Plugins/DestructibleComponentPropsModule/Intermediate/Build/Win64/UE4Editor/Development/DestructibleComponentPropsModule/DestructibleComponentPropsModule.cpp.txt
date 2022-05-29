@@ -1,0 +1,2 @@
+D:\UE4\Tank_GB_1\Plugins\DestructibleComponentPropsModule\Intermediate\Build\Win64\UE4Editor\Development\DestructibleComponentPropsModule\Definitions.DestructibleComponentPropsModule.h
+D:\UE4\Tank_GB_1\Plugins\DestructibleComponentPropsModule\Source\DestructibleComponentPropsModule\Public\DestructibleComponentPropsModule.h

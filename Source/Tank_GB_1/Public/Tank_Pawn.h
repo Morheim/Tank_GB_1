@@ -8,6 +8,7 @@
 #include "TurretCannon.h"
 #include "DamageTarget.h"
 #include "SprayCannon.h"
+#include "Blueprint/UserWidget.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Tank_GB_1/Parent class/ParentStarterClass.h"
@@ -33,6 +34,7 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category="Components")
 	UCameraComponent* CameraComponent;
 	
+	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Fire params")
 	TSubclassOf<ACannon> CannonType;
 	UPROPERTY()
@@ -47,7 +49,6 @@ public:
 	TSubclassOf<ASprayCannon> SprayCannonType;
 	UPROPERTY()
 	ASprayCannon* SprayCannon;
-	
 	
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Movement")
@@ -68,6 +69,18 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="AI|Move")
 	FName WaypointTag;
+
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = "Components")
+	UParticleSystemComponent* DeadEffect;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "QuitGame")
+	int QuitGameSec = 5;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widgets")
+	TSubclassOf<UUserWidget> GameOverWidgetClass;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widgets")
+	UUserWidget* GameOverWidget;
 
 	
 	void MoveForward (float Scale);
@@ -100,8 +113,12 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	
+	virtual void PossessedBy(AController* NewController) override;
 
 private:
+	FTimerHandle QuitGame;
+	void QuitGameStopSimulation();
 	void MoveTank(float DeltaTime);
 	void RotateTank(float DeltaTime);
 	void RotateCannon(float DeltaTime);

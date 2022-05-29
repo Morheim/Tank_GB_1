@@ -1,0 +1,13 @@
+{
+	"RemapUnityFiles": 
+	{
+		"Module.DestructibleComponentPropsModule.cpp.obj": [
+			"DestructibleComponentProps.cpp.obj",
+			"DestructibleComponentPropsModule.cpp.obj"
+		],
+		"Module.DestructibleComponentPropsModule.gen.cpp.obj": [
+			"DestructibleComponentProps.gen.cpp.obj",
+			"DestructibleComponentPropsModule.init.gen.cpp.obj"
+		]
+	}
+}

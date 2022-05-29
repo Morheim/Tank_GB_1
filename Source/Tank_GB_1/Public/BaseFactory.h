@@ -11,7 +11,6 @@
 #include "Engine/TargetPoint.h"
 #include "GameFramework/Actor.h"
 #include "DestroyBaseFactory.h"
-#include "DestroyBaseFactory_.h"
 #include "BaseFactory.generated.h"
 
 UCLASS()
@@ -64,9 +63,6 @@ public:
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Fabric")
 	TSubclassOf<ADestroyBaseFactory> DestroyBaseFactoryClass;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Fabric")
-	TSubclassOf<ADestroyBaseFactory_> DestroyBaseFactoryMeshClass;
 
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = "Components")
 	UArrowComponent* DestroyBaseFactorySpawnPoint;
