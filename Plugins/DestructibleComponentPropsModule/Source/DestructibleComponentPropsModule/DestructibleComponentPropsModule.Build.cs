@@ -20,7 +20,7 @@ public class DestructibleComponentPropsModule : ModuleRules
 				// ... add other private include paths required here ...
 			}
 			);
-			
+		
 		
 		PublicDependencyModuleNames.AddRange(
 			new string[]
@@ -38,7 +38,7 @@ public class DestructibleComponentPropsModule : ModuleRules
 				"Engine",
 				"Slate",
 				"SlateCore",
-				"ApexDestruction",
+				"ApexDestruction"
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);

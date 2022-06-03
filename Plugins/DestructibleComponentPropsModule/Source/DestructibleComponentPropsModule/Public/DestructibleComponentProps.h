@@ -11,7 +11,7 @@
 #include "DestructibleComponentProps.generated.h"
 
 UCLASS()
-class NO_API ADestructibleComponentProps : public AActor
+class DESTRUCTIBLECOMPONENTPROPSMODULE_API ADestructibleComponentProps : public AActor
 {
 	GENERATED_BODY()
 	

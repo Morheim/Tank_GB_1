@@ -682,5 +682,3 @@ C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.2
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\isa_availability.h
 E:\Games\Epic Games\UE_4.27\Engine\Source\Runtime\Slate\Public\Widgets/Input/SSlider.h
 E:\Games\Epic Games\UE_4.27\Engine\Source\Runtime\Slate\Public\Framework/Docking/LayoutService.h
-D:/UE4/Tank_GB_1/Plugins/DestructibleComponentPropsModule/Source/DestructibleComponentPropsModule/Private/DestructibleComponentPropsModule.cpp
-D:\UE4\Tank_GB_1\Plugins\DestructibleComponentPropsModule\Source\DestructibleComponentPropsModule\Public\DestructibleComponentPropsModule.h

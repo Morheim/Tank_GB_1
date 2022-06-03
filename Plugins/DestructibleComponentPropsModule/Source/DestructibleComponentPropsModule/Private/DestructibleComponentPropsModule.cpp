@@ -16,5 +16,5 @@ void FDestructibleComponentPropsModuleModule::ShutdownModule()
 }
 
 #undef LOCTEXT_NAMESPACE
-	
+
 IMPLEMENT_MODULE(FDestructibleComponentPropsModuleModule, DestructibleComponentPropsModule)

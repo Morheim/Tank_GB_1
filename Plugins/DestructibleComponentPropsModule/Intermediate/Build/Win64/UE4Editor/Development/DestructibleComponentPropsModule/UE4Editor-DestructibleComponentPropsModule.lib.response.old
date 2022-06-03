@@ -7,6 +7,7 @@
 /IGNORE:4221
 /NODEFAULTLIB
 "D:\UE4\Tank_GB_1\Intermediate\Build\Win64\Tank_GB_1Editor\Development\Engine\SharedPCH.Engine.ShadowErrors.h.obj"
-"D:\UE4\Tank_GB_1\Plugins\DestructibleComponentPropsModule\Intermediate\Build\Win64\UE4Editor\Development\DestructibleComponentPropsModule\DestructibleComponentPropsModule.cpp.obj"
+"D:\UE4\Tank_GB_1\Plugins\DestructibleComponentPropsModule\Intermediate\Build\Win64\UE4Editor\Development\DestructibleComponentPropsModule\Module.DestructibleComponentPropsModule.cpp.obj"
+"D:\UE4\Tank_GB_1\Plugins\DestructibleComponentPropsModule\Intermediate\Build\Win64\UE4Editor\Development\DestructibleComponentPropsModule\Module.DestructibleComponentPropsModule.gen.cpp.obj"
 "D:\UE4\Tank_GB_1\Plugins\DestructibleComponentPropsModule\Intermediate\Build\Win64\UE4Editor\Development\DestructibleComponentPropsModule\Default.rc2.res"
 /OUT:"D:\UE4\Tank_GB_1\Plugins\DestructibleComponentPropsModule\Intermediate\Build\Win64\UE4Editor\Development\DestructibleComponentPropsModule\UE4Editor-DestructibleComponentPropsModule.lib"

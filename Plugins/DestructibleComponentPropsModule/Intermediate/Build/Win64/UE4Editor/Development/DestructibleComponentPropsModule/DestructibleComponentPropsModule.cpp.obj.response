@@ -232,6 +232,10 @@
 /I Editor\Kismet\Public
 /I ..\Intermediate\Build\Win64\UE4Editor\Inc\ClothingSystemRuntimeInterface
 /I Runtime\ClothingSystemRuntimeInterface\Public
+/I ..\Plugins\Runtime\ApexDestruction\Intermediate\Build\Win64\UE4Editor\Inc\ApexDestruction
+/I ..\Plugins\Runtime\ApexDestruction\Source
+/I ..\Plugins\Runtime\ApexDestruction\Source\ApexDestruction\Public
+/I D:\UE4\Tank_GB_1\Plugins\DestructibleComponentPropsModule\Intermediate\Build\Win64\UE4Editor\Inc\DestructibleComponentPropsModule
 /I D:\UE4\Tank_GB_1\Plugins\DestructibleComponentPropsModule\Source
 /I D:\UE4\Tank_GB_1\Plugins\DestructibleComponentPropsModule\Source\DestructibleComponentPropsModule\Public
 /I ThirdParty\PhysX3\PxShared\include
