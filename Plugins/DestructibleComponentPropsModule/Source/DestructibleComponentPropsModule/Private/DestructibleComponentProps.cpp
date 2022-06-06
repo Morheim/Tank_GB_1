@@ -1,5 +1,4 @@
 // Fill out your copyright notice in the Description page of Project Settings.
-// это тестовый вариант разрушения спавнера он ещё не доработан
 
 #include "DestructibleComponentProps.h"
 
